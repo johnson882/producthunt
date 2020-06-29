@@ -5,7 +5,7 @@ class Vote(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     #product = models.ForeignKey(Product, on_delete=models.CASCADE)
 
-    
+
 
 
 class Product(models.Model):
@@ -15,7 +15,7 @@ class Product(models.Model):
     url = models.TextField()
     image = models.ImageField(upload_to='images/')
     icon = models.ImageField(upload_to='images/')
-    #votes_total = models.IntegerField(default=1)
+    votes_total_int = models.IntegerField(default=0)
     hunter = models.ForeignKey(User, on_delete=models.CASCADE)
     votes_total = models.ManyToManyField(Vote, related_name="votes", blank=True)
 

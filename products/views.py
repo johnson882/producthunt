@@ -5,6 +5,8 @@ from django.utils import timezone
 
 def home(request):
     products = Product.objects
+
+
     return render(request, 'products/home.html',{'products':products})
 
 @login_required(login_url="/accounts/signup")
@@ -30,7 +32,9 @@ def create(request):
             product.votes_total.add(vote)
             product.save()
 
-            print("count for product", product.votes_total.count())
+            product.votes_total_int =  product.votes_total.all().count()
+            product.save()
+            print("count for product", product.votes_total_int)
 
             return redirect('/products/' + str(product.id))
         else:
