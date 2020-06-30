@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from .models import Product, Vote
+from django.contrib.auth.models import User
 from django.utils import timezone
 
 def home(request):
@@ -44,13 +45,36 @@ def create(request):
 
 def detail(request, product_id):
     product = get_object_or_404(Product, pk=product_id)
-    print("here is the total vote count:", product.votes_total.all().count())
+    print("here is the total vote count:", product.votes_total_int)
     return render(request, 'products/detail.html',{'product':product})
 
 @login_required(login_url="/accounts/signup")
 def upvote(request, product_id):
     if request.method == 'POST':
         product = get_object_or_404(Product, pk=product_id)
-        product.votes_total += 1
+        votes = product.votes_total.all()
+        currentUser = request.user
+        flag = False
+        #aUser = product.
+        for vote in votes:
+            if vote.user == currentUser:
+                vote.delete()
+
+                flag = True
+
+        if flag == True:
+            print("we found ", currentUser)
+        else:
+            vote = Vote()
+            vote.user = request.user
+            vote.save()
+            product.votes_total.add(vote)
+            product.save()
+        product.votes_total_int =  product.votes_total.all().count()
+            #product.votes_total.all().remove(currentUser)
+        #return render(request, 'accounts/signup.html', {'error':'Username has already been taken'})
+
+
+        #product.votes_total += 1
         product.save()
         return redirect('/products/' + str(product.id))
