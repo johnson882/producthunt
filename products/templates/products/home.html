@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
-
+{% load products_tags %}
 {% for product in products.all %}
 <div class="row pt-3">
   <div class="col-2" onclick="window.location='{% url 'detail' product.id %}';" style="cursor: pointer;">
@@ -12,7 +12,15 @@
     <p>{{ product.summary }}</p>
   </div>
   <div class="col-4">
-    <a href="javascript:{document.getElementById('upvote{{ product.id }}').submit()}"><button class="btn btn-primary btn-lg btn-block"><span class="oi oi-caret-top"></span> Upvote {{ product.votes_total_int }}</button></a>
+    ProductID:{{product.id}}
+
+    {% if user|has_user:product.id %}
+    <h1> Made it! </h1>
+    {% endif %}
+
+
+  <a href="javascript:{document.getElementById('upvote{{ product.id }}').submit()}"><button class="btn btn-primary btn-lg btn-block"><span class="oi oi-caret-top"></span> Upvote {{ product.votes_total_int }}</button></a>
+
   </div>
 </div>
 

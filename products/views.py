@@ -4,11 +4,13 @@ from .models import Product, Vote
 from django.contrib.auth.models import User
 from django.utils import timezone
 
+
 def home(request):
     products = Product.objects
 
 
     return render(request, 'products/home.html',{'products':products})
+
 
 @login_required(login_url="/accounts/signup")
 def create(request):
@@ -59,12 +61,9 @@ def upvote(request, product_id):
         for vote in votes:
             if vote.user == currentUser:
                 vote.delete()
-
                 flag = True
 
-        if flag == True:
-            print("we found ", currentUser)
-        else:
+        if flag == False:
             vote = Vote()
             vote.user = request.user
             vote.save()
