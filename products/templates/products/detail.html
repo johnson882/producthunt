@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-
+{% load products_tags %}
 {% block content %}
 
 <div class="row">
@@ -16,7 +16,12 @@
     <img src="{{ product.image.url }}" class="img-fluid" />
   </div>
   <div class="col-4">
-    <a href="javascript:{document.getElementById('upvote').submit()}"><button class="btn btn-primary btn-lg btn-block"><span class="oi oi-caret-top"></span> Upvote {{ product.votes_total_int }}</button></a>
+
+    {% if not user|has_user:product.id %}
+      <a href="javascript:{document.getElementById('upvote').submit()}"><button class="btn btn-primary btn-lg btn-block"><span class="oi oi-caret-top"></span> Upvote {{ product.votes_total_int }}</button></a>
+    {% else %}
+    <a href="javascript:{document.getElementById('upvote').submit()}"><button class="btn btn-primary btn-lg btn-block " style="background-color: #f44336"><span class="oi oi-caret-bottom"></span> Upvote {{ product.votes_total_int }}</button></a>
+    {% endif %}
   </div>
 </div>
 

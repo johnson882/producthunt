@@ -8,9 +8,12 @@ def has_user(user, product_id):
     p_id = int(product_id)
     product = get_object_or_404(Product, pk=product_id)
     votes = product.votes_total.all()
-    print("we have made it to the search")
+
     flag = 0
     for vote in votes:
         if vote.user == user:
-            return flag
-    return flag
+            print("found the user")
+            return user
+
+    print("didnt find the user")
+    return 0

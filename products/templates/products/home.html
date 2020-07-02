@@ -14,12 +14,16 @@
   <div class="col-4">
     ProductID:{{product.id}}
 
-    {% if user|has_user:product.id %}
-    <h1> Made it! </h1>
+    {% if not user|has_user:product.id %}
+      <a href="javascript:{document.getElementById('upvote{{ product.id }}').submit()}"><button class="btn btn-primary btn-lg btn-block"><span class="oi oi-caret-top"></span> Upvote {{ product.votes_total_int }}</button></a>
+    {% else %}
+    <a href="javascript:{document.getElementById('upvote{{ product.id }}').submit()}"><button class="btn btn-primary btn-lg btn-block " style="background-color: #f44336"><span class="oi oi-caret-bottom"></span> Upvote {{ product.votes_total_int }}</button></a>
     {% endif %}
 
 
-  <a href="javascript:{document.getElementById('upvote{{ product.id }}').submit()}"><button class="btn btn-primary btn-lg btn-block"><span class="oi oi-caret-top"></span> Upvote {{ product.votes_total_int }}</button></a>
+
+
+
 
   </div>
 </div>

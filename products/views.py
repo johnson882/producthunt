@@ -72,8 +72,8 @@ def upvote(request, product_id):
         product.votes_total_int =  product.votes_total.all().count()
             #product.votes_total.all().remove(currentUser)
         #return render(request, 'accounts/signup.html', {'error':'Username has already been taken'})
-
+        print("should redirect")
 
         #product.votes_total += 1
         product.save()
-        return redirect('/products/' + str(product.id))
+        return redirect('/products/' + str(product.id),{"product_id":product.id})
